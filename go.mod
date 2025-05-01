@@ -1,4 +1,4 @@
-module github.com/rubiojr/risor-modules/echarts
+module github.com/rubiojr/echarts-risor
 
 go 1.22
 
