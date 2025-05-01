@@ -1,10 +1,9 @@
-import { Callout } from 'nextra/components';
-
 # Echarts 
 
-<Callout type="info" emoji="ℹ️">
-This module is not included with Risor.
-</Callout>
+Risor module to create charts. Wraps https://github.com/go-echarts/go-echarts.
+
+> [!NOTE]
+> This module is not included with Risor.
 
 The `echarts` module exposes a simple interface to create charts, powered by the great [go-echarts](https://github.com/go-echarts/go-echarts) library.
 
