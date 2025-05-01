@@ -88,10 +88,13 @@ func Line(ctx context.Context, args ...object.Object) object.Object {
 	}
 
 	line := charts.NewLine()
-	line.SetGlobalOptions(charts.WithTitleOpts(opts.Title{
-		Title:    title,
-		Subtitle: subtitle,
-	}))
+	line.SetGlobalOptions(
+		charts.WithTitleOpts(opts.Title{
+			Title:    title,
+			Subtitle: subtitle,
+		}),
+		charts.WithLegendOpts(opts.Legend{Orient: "horizontal", Left: "right", Top: "bottom"}),
+	)
 
 	line.SetXAxis(xAxis)
 	for t, i := range series {
@@ -102,8 +105,13 @@ func Line(ctx context.Context, args ...object.Object) object.Object {
 	if ferr != nil {
 		return object.NewError(ferr)
 	}
+	defer f.Close()
 
-	return object.NewError(line.Render(f))
+	nErr := line.Render(f)
+	if nErr != nil {
+		return object.NewError(nErr)
+	}
+	return nil
 }
 
 func Bar(ctx context.Context, args ...object.Object) object.Object {
@@ -159,10 +167,13 @@ func Bar(ctx context.Context, args ...object.Object) object.Object {
 	}
 
 	bar := charts.NewBar()
-	bar.SetGlobalOptions(charts.WithTitleOpts(opts.Title{
-		Title:    title,
-		Subtitle: subtitle,
-	}))
+	bar.SetGlobalOptions(
+		charts.WithTitleOpts(opts.Title{
+			Title:    title,
+			Subtitle: subtitle,
+		}),
+		charts.WithLegendOpts(opts.Legend{Orient: "horizontal", Left: "right", Top: "bottom"}),
+	)
 
 	bar.SetXAxis(xAxis)
 	for t, i := range series {
@@ -173,8 +184,13 @@ func Bar(ctx context.Context, args ...object.Object) object.Object {
 	if cerr != nil {
 		return object.NewError(cerr)
 	}
+	defer f.Close()
 
-	return object.NewError(bar.Render(f))
+	nErr := bar.Render(f)
+	if nErr != nil {
+		return object.NewError(nErr)
+	}
+	return nil
 }
 
 func strValue(opts *object.Map, key, def string) (string, *object.Error) {
